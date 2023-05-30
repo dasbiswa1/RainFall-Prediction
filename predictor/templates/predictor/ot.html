@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    {% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+        integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+
+    <title>Rainfall analytics</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/my.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        function getParams() {
+            var idx = document.URL.indexOf('?');
+            var params = new Array();
+            if (idx != -1) {
+                var pairs = document.URL.substring(idx + 1, document.URL.length).split('&');
+                for (var i = 0; i < pairs.length; i++) {
+
+                    nameVal = pairs[i].split('=');
+                    params[nameVal[0]] = nameVal[1];
+
+
+                }
+            }
+            return params;
+        }
+        params = getParams();
+        dict = unescape(params["dict"]);
+        year1 = unescape(params["year1"]);
+        year2 = unescape(params["year2"]);
+
+        
+
+        var arr1 = [['Year', 'rainfall '],
+        ['2001', 70],
+        ['2002', 74],
+        ['2003', 62],
+        ['2004', 79],
+        ['2005', 36],
+        ['2006', 39],
+        ['2007', 33],
+        ['2008', 30],
+        ['2009', 37],
+        ['2010', 17],
+        ['2011', 12],
+        ['2012',15],
+        ['2013',25],
+        ['2014',30],
+        ['2015',37],
+        ['2016',12],
+        ['2017',22],
+        ['2018',19],
+        ['2019',38],
+        ['2020',33],
+        ['2021',25],
+        ['2022',11]];
+        // for(var i=0;i<1;i++)
+        // {
+           
+        //     // var z=document.getElementById("y1").value;
+        //     alert(document.getElementById("y1").value);
+        //     alert(z);
+        //     var x=document.getElementById("y2").value;
+        //     arr1.push(z, x);
+        // }
+        var z = parseInt(year1);
+        var c = parseInt(year2);
+        var s;
+
+        var arr2 = [['Year', 'rainfall ']];
+        for (var j = 0; j < arr1.length; j++) {
+            for (var k = 0; k < arr1[j].length; k++) {
+                if (z == parseInt(arr1[j][0])) {
+                    s = j;
+                }
+            }
+
+        }
+        var e;
+        for (var j = 0; j < arr1.length; j++) {
+            for (var k = 0; k < arr1[j].length; k++) {
+                if (c == parseInt(arr1[j][0])) {
+                    e = j;
+                }
+            }
+
+        }
+        for (var g = s; g <= e; g++) {
+            arr2.push([arr1[g][0], arr1[g][1]]);
+        }
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+
+            var data = google.visualization.arrayToDataTable(arr2);
+            var options = {
+                title: 'Rainfall density in mm',
+                hAxis: { title: 'Year', titleTextStyle: { color: '#333' } },
+                vAxis: { minValue: 0 }
+            };
+
+            var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
+
+
+        }
+
+
+    </script>
+
+
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg  navbar-dark " style="background-color: #492f75; color: white;">
+        <a class="navbar-brand" href="#"><strong>
+                <!-- <img src="lightning-icon-small-flat-iconset-paomedia-928495-removebg-preview.png" alt="" id="img"> -->
+                Thunder Buddies
+            </strong> </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href="{% url 'predictor-index' %}">Home <span
+                        class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link" href="{% url 'predictor-about' %}">About</a>
+                <a class="nav-item nav-link" href="{% url 'predictor-contact' %}">Contact-Us</a>
+
+            </div>
+        </div>
+    </nav>
+    <div class="contianer">
+        <!-- <div class="card"></div> -->
+        <div class="text" height="20px">
+            <h2><i class="fa fa-map-marker"></i> <span id="location"></span></h2>
+            <h5 id="weather"></h5>
+            <h4><span id="temp"></span><sup>o</sup>C</h4>
+            <h3 id="precipitation"></h3>
+            <img src="" id="icon">
+            <button onClick="window.location.reload();" class="refresh"><i class="fa fa-refresh"></i></button>
+        </div>
+
+        <div id="chart_div" class="chart" align="right">
+        </div>
+        <!-- <div class="card"></div> -->
+        <div id="columnchart_values" class="chart"></div>
+    </div>
+
+
+    <script type="text/javascript">
+        link = "http://api.openweathermap.org/data/2.5/weather?q=bhubaneswar&appid=2a1b5d551ed3ae6572ec4af863d42e21";
+        var request = new XMLHttpRequest();
+        request.open('GET', link, true);
+        request.onload = function () {
+            var obj = JSON.parse(this.response);
+            console.log(obj);
+            document.getElementById('weather').innerHTML = obj.weather[0].description;
+            document.getElementById('location').innerHTML = obj.name;
+            document.getElementById('temp').innerHTML = Math.round(obj.main.temp - 273.15);
+            document.getElementById('icon').src = "http://openweathermap.org/img/w/" + obj.weather[0].icon + ".png";
+        }
+        if (request.status = 200) {
+            console.log("ERROR");
+        }
+        request.send();
+    </script>
+<!-- {% for i in weatherdata %}
+     <h2 id="y1">{{i.district}}</h2>
+    <h2 id="y2">{{i.year}}</h2>
+    <h2 id="r1">{{i.rainfall}}</h2>
+{% endfor %} -->
+
+
+
+
+
+
+
+        <!-- <footer>
+        <div class="container1" align ="margin-bottom">
+            <ul class="flex-row">
+                <li>
+                    <i class="fab fa-facebook-f"></i>
+                </li>
+                <li>
+                    <i class="fab fa-twitter"></i>
+                </li>
+                <li>
+                    <i class="fab fa-google"></i>
+                </li>
+                <li>
+                    <i class="fab fa-instagram"></i>
+                </li>
+                <li>
+                    <i class="fab fa-linkedin-in"></i>
+                </li>
+                <li>
+                    <i class="fab fa-github"></i>
+                </li>
+            </ul>
+            
+            <p>&copy; 2020 ThunderBuddies.com </p>
+        </div>
+    </footer> -->
+
+
+
+
+
+
+        <!-- Optional JavaScript; choose one of the two! -->
+
+        <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
+            crossorigin="anonymous"></script>
+
+        <!-- Option 2: Separate Popper and Bootstrap JS -->
+        <!--
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
+    -->
+</body>
+
+</html>

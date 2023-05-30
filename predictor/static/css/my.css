@@ -1,0 +1,100 @@
+.chart
+{
+    margin: 1px;
+    width: 700px ;
+    height: 400px ;
+    position : absolute;
+    top: 26%;
+    left: 50%;
+    padding: 12px;
+    /* background: rgba(213, 210, 210, 0.649); */
+    background-color: transparent;
+    /* background: rgba(50,50,50,0.2); */
+    box-shadow: 5px 5px 10px #191b1b, -5px -5px 10px #595959;
+    border-radius: 5%;
+    justify-content: center;
+  
+   
+} 
+div#chart_div{
+    background-color: rgba(213, 210, 210, 0.649);
+
+}
+ .drawChart{
+    border-radius:50px;
+ }
+
+ img#icon {
+    width: 18%;
+
+}
+
+h5#weather {
+    text-transform: capitalize;
+
+}
+
+button.refresh {
+
+    display: block;
+    width: 100px;
+    height: 100px;
+    margin: 10px auto;
+    border: 20px;
+    font-size: 30px;
+    border-radius: 50%;
+    box-shadow: 10px 4px 18px #252525, 5px 5px 18px #4a4a4a;
+    transition: 1s;
+    background: transparent;
+    color: #040404;
+    /* text-align: center; */
+    /* display: flex; */
+    /* display:grid; */
+}
+
+button.refresh:hover {
+
+    box-shadow: inset 10px 4px 18px #252525, 5px 5px 18px #4a4a4a;
+}
+
+
+
+.container {
+    width: 26%;
+    /* align-self: left; */
+    /* filter: blur(0px);
+    -webkit-filter: blur(0px); */
+   
+}
+
+.text {
+    
+    border-radius: 50px;
+    background: transparent;
+    box-shadow: 5px 5px 10px #191b1b, -5px -5px 10px #595959;
+    padding: 20px;
+    text-align: center;
+    height: auto;
+    margin: 10px; 
+    /* color: white; */
+    font-weight: bold;
+    
+    border: 3px solid #f1f1f1;
+    position: absolute;
+    top: 50%;
+    left: 23%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    width: 40%;
+    padding: 10px;
+    border-right: 20px;
+    height:80%;
+    /* filter: blur(8px);
+    -webkit-filter: blur(8px); */
+
+    background-color: rgba(213, 210, 210, 0.649);
+    font-size: 30px;
+}
+body {
+    background-color: darkviolet;   
+}
